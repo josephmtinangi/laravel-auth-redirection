@@ -18,3 +18,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('heroes', function () {
+	$users = App\User::get();
+	return view('heroes', compact('users'));
+})->name('heroes');
+
+Route::get('@{username}', function ($username) {
+	$user = App\User::whereUsername($username)->firstOrFail();
+	return view('account.profile', compact('user'));
+})->name('profile');
